@@ -1,0 +1,24 @@
+php artisan make:migration ProductTable
+php artisan make:seeder ProductSeeder
+php artisan make:controller ProductController
+php artisan make:model Product
+
+npm install react-router-dom
+npm install react-bootstrap bootstrap
+npm install react-icons
+
+controller `
+route`
+model`
+migration`
+seeder`
+
+View`
+Add`
+Delete`
+Edit`
+Search
+Filter 
+	-price
+	-category
+	-stock
