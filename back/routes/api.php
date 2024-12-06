@@ -11,3 +11,13 @@ Route::get('/products/{id}', [ProductController::class, 'show']); // Public rout
 Route::post('/products', [ProductController::class, 'store']);   // Create product
 Route::put('/products/{id}', [ProductController::class, 'update']); // Update product
 Route::delete('/products/{id}', [ProductController::class, 'destroy']); // Delete product
+
+use App\Http\Controllers\CartController;
+
+// List all CartItems
+Route::get('/cart', [CartController::class, 'index']);
+Route::post('/cart', [CartController::class, 'store']);
+Route::get('/cart/{id}', [CartController::class, 'show']);
+Route::put('/cart/{id}', [CartController::class, 'update']);
+Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+Route::delete('/cart/clear', [CartController::class, 'destroyAll']);

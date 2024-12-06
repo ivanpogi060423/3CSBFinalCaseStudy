@@ -13,39 +13,54 @@ THIS IS FOR HEADER */
 
 /* Header container */
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
-
-
 .header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #333;
-    padding: 10px;
-    color: white;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  background-color: #333;
+  padding: 10px;
+  color: white;
+  position: relative; 
+  width: 100%; 
 }
 
 .title {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between icon and title */
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 10px; 
+  flex-grow: 1; 
+  text-align: center;
 }
 
-/* Cart icon styling */
-.cart-icon {
-    font-weight: 600;
-    font-size: 3rem; /* Adjust icon size */
-    color: #fff; /* White color for the icon */
-    margin-right: 10px; /* Adds space between the icon and the title */
+.cart-icon { 
+  font-size: 2rem;
+  color: #fff; 
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: absolute;
+  right: 20px; 
+  top:10px;
 }
 
-/* Title styling with letter spacing */
+.cart-icon:hover {
+  color: #f39c12;
+}
+
+.bag-icon {
+  font-size: 2rem; 
+  color: #fff; 
+}
+
 .title h4 {
-    font-family: 'Rock Salt', cursive;
-    font-weight: bold;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 5px; /* Adds space between letters, adjust this value */
+  font-family: 'Rock Salt', cursive;
+  font-weight: bold;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 5px;
 }
+
+
 
 
 
