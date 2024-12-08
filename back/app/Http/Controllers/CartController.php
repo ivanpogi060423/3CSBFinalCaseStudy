@@ -17,10 +17,11 @@ class CartController extends Controller
     }
 
     // Add a new Cart
-    public function store(Request $request)
+// Add a new Cart
+public function store(Request $request)
 {
-    // Validate the incoming request data
-    $validatedData = $request->validate([
+    // Define validation rules
+    $rules = [
         'product_id' => 'required|integer|min:0',
         'barcode' => 'required|unique:cart,barcode',
         'name' => 'required|unique:cart,name',
@@ -28,18 +29,22 @@ class CartController extends Controller
         'quantity' => 'required|integer|min:0',
         'category' => 'nullable|string|max:255',
         'description' => 'nullable|string',
-    ]);
+    ];
 
-    // Try creating the new Cart
-    try {
-        $Cart = Cart::create($validatedData);
+    // Validate the incoming request data
+    $validatedData = $request->validate($rules);
 
+    // Create a new Cart instance and save it
+    $Cart = new Cart($validatedData);
+
+    // Attempt to save the Cart and handle any exceptions
+    if ($Cart->save()) {
         // Return a success response
         return response()->json(['message' => 'Cart created successfully', 'data' => $Cart], 201);
-    } catch (\Exception $e) {
-        // Return a server error if something went wrong
-        return response()->json(['error' => 'Server error: ' . $e->getMessage()], 500);
     }
+
+    // Return a server error if something went wrong
+    return response()->json(['error' => 'Server error: Unable to create cart'], 500);
 }
 
     
@@ -58,16 +63,34 @@ class CartController extends Controller
 
     public function update(Request $request, int $id): JsonResponse
     {
-        $cartItem = Cart::findOrFail($id);  
-        $validatedData = $request->validate([
-            'quantity' => 'required|integer|min:1',  
-        ]);
-        // Update the quantity of the cart item
-        $cartItem->quantity = $validatedData['quantity'];
-        $cartItem->save(); 
+        try {
+            // Find the cart item by ID
+            $cartItem = Cart::findOrFail($id);
     
-       
-        return response()->json(['message' => 'Cart item updated successfully', 'data' => $cartItem], 200);
+            // Validate the incoming request data
+            $validatedData = $this->validateUpdateRequest($request);
+    
+            // Update the quantity of the cart item
+            $cartItem->quantity = $validatedData['quantity'];
+            $cartItem->save();
+    
+            // Return a success response
+            return response()->json(['message' => 'Cart item updated successfully', 'data' => $cartItem], 200);
+        } catch (ModelNotFoundException $e) {
+            // Return a not found response if the cart item does not exist
+            return response()->json(['error' => 'Cart item not found'], 404);
+        } catch (\Exception $e) {
+            // Return a server error for any other exceptions
+            return response()->json(['error' => 'Server error: ' . $e->getMessage()], 500);
+        }
+    }
+    
+    // Separate method for validation
+    private function validateUpdateRequest(Request $request): array
+    {
+        return $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
     }
     
 
@@ -86,10 +109,10 @@ class CartController extends Controller
     
  // Destroy all Carts (Clear the cart)
  public function destroyAll(): JsonResponse
- {
-     // Delete all Carts
-     Cart::query()->delete();
+{
+    // Delete all Carts
+    Cart::query()->delete();
 
-     return response()->json(['message' => 'All Carts have been deleted successfully'], 200);
- }
+    return response()->json(['message' => 'All Carts have been deleted successfully'], 200);
+}
 }

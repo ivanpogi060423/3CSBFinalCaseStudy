@@ -5,11 +5,11 @@ import Filter from "../Component/Filter";
 import ProductCard from "../Component/ProductCard";
 
 export default function Main() {
-  // Product data
+  // Handle the data of the product
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  // Loading and error screens
+  // Handles the errors
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +26,7 @@ export default function Main() {
         setProducts(response.data.data);
         setFilteredProducts(response.data.data); // Initialize filteredProducts
       } catch (err) {
-        setError("Failed to fetch products");
+        setError("A problem occurs while fetching data from the database");
       } finally {
         setLoading(false);
       }

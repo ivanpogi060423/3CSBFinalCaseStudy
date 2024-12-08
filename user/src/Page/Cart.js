@@ -16,7 +16,7 @@ export default function Cart() {
         const response = await axios.get('http://127.0.0.1:8000/api/cart');
         setCartItems(response.data.data);
       } catch (error) {
-        console.error('Error fetching cart items:', error);
+        console.error('A Problem Occur while fetching the data:', error);
       } finally {
         setLoading(false);
       }
@@ -25,6 +25,8 @@ export default function Cart() {
     fetchCartItems();
   }, []);
 
+
+//Handles the updating of quantity
 const handleQuantityChange = async (id, newQuantity) => {
   if (newQuantity <= 0 || isNaN(newQuantity)) {
     return; // Don't update if the quantity is invalid
@@ -39,7 +41,7 @@ const handleQuantityChange = async (id, newQuantity) => {
 
     // Check if the response was successful and if so, update the cartItems state
     if (response.status === 200) {
-      console.log('Quantity updated successfully.');
+      console.log('Quantity of the item updated successfully.');
 
       // Update the local state with the new quantity
       setCartItems((prevCartItems) =>
@@ -48,10 +50,10 @@ const handleQuantityChange = async (id, newQuantity) => {
         )
       );
     } else {
-      console.error('Error in updating quantity');
+      console.error('An error occured, failed to update quantity');
     }
   } catch (error) {
-    console.error('Error updating quantity:', error);
+    console.error('An error occured, failed to update quantity:', error);
   }
 };
 
@@ -62,11 +64,11 @@ const handleQuantityChange = async (id, newQuantity) => {
       await axios.delete(`http://127.0.0.1:8000/api/cart/${id}`);
       setCartItems(cartItems.filter(item => item.id !== id));
     } catch (error) {
-      console.error('Error removing item:', error);
+      console.error('An error occured, failed to remove item:', error);
     }
   };
 
-  // Calculate the total price of the cart
+  // Handles the calculation of the total amount of items inside the cart
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
@@ -138,7 +140,7 @@ const handleQuantityChange = async (id, newQuantity) => {
 
           {/* Cart Total */}
           <div className="mt-4">
-            <h3>Total: ${calculateTotal()}</h3>
+            <h3>Total Amount: ${calculateTotal()}</h3>
             <Button variant="success" onClick={handleCheckout}>
               Proceed to Checkout
             </Button>
