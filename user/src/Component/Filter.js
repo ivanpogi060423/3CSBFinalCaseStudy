@@ -69,7 +69,7 @@ export default function Filter({ onSearch, categories }) {
                         .map(category => (
                             <Form.Check
                                 key={category}
-                                type="checkbox"
+                                type="radio"
                                 value={category}
                                 label={category}
                                 checked={selectedCategories.includes(category)}

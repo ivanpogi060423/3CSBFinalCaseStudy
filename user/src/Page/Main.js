@@ -3,6 +3,8 @@ import axios from "axios";
 import Header from "../Component/Header";
 import Filter from "../Component/Filter";
 import ProductCard from "../Component/ProductCard";
+import { Link } from "react-router-dom"; // Import Link for cart navigation
+import { GiShoppingCart } from "react-icons/gi"; // Shopping cart icon
 
 export default function Main() {
   // Handle the data of the product
@@ -77,24 +79,32 @@ export default function Main() {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <Header />
-      <div className="main">
-        <aside className="searchFilter">
-          {/* Pass the handleSearch function to Filter */}
-          <Filter onSearch={handleSearch} categories={uniqueCategories} />
-        </aside>
+      
+      <div className="content-container">
+        {/* Cart Icon */}
+        <Link to="/cart" className="cart-link">
+          <GiShoppingCart className="cart-icon" />
+        </Link>
+        
+        <div className="main">
+          <aside className="searchFilter">
+            {/* Pass the handleSearch function to Filter */}
+            <Filter onSearch={handleSearch} categories={uniqueCategories} />
+          </aside>
 
-        <div className="container">
-          {/* Render filtered products */}
-          <div className="product-list">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))
-            ) : (
-              <h1>No product Found</h1>
-            )}
+          <div className="product-list-container">
+            {/* Render filtered products */}
+            <div className="product-list">
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              ) : (
+                <h1>No products found</h1>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -5,9 +5,8 @@ import DeletePrompt from "../Component/DeletePrompt";
 import Filter from "../Component/Filter";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { RiEdit2Fill } from "react-icons/ri";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import Header from "../Component/Header";
+import {RiAddCircleFill, RiEdit2Fill, RiDeleteBin5Fill  } from "react-icons/ri";
+
 
 export default function Dashboard() {
     //PRODUCT DATA
@@ -149,86 +148,92 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header />
-      <div className="dashboard">
-        <aside className="searchFilter">
-          {/* Pass the handleSearch function to Filter */}
-          <Filter onSearch={handleSearch} categories={uniqueCategories} />
-        </aside>
+      
+<div className="dashboard">
+  <aside className="searchFilter">
+    {/* Pass the handleSearch function to Filter */}
+    <Filter onSearch={handleSearch} categories={uniqueCategories} />
+  </aside>
 
-        <div className="view">
-          <h1>Dashboard</h1>
-          <Button className="addButton" onClick={handleAdd}>
-            Add Product
-          </Button>
-          <Table>
-            <thead>
-              <tr>
-                <th>Barcode</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product) => (
-                  <tr key={product.id}>
-                    <td>{product.barcode}</td>
-                    <td>{product.name}</td>
-                    <td>{product.category}</td>
-                    <td>{product.description}</td>
-                    <td>{product.price}</td>
-                    <td>{product.stock}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <Button
-                          className="editButton"
-                          onClick={() => handleEdit(product)}
-                        >
-                          <RiEdit2Fill />
-                        </Button>
+  <div className="view">
+    <h1 className="dashboard-title">Dashboard</h1>
+    <Button className="addButton" onClick={handleAdd} variant="primary">
+      <RiAddCircleFill /> Add Product
+    </Button>
 
-                        <Button
-                          className="deleteButton"
-                          onClick={() => handleDelete(product.id)}
-                        >
-                          <RiDeleteBin5Fill />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="8" className="text-center">
-                    No products found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </div>
-      </div>
+    <Table striped responsive className="product-table">
+      <thead>
+        <tr>
+          <th>Barcode</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <tr key={product.id}>
+              <td>{product.barcode}</td>
+              <td>{product.name}</td>
+              <td>{product.category}</td>
+              <td>{product.description}</td>
+              <td>{product.price}</td>
+              <td>{product.stock}</td>
+              <td>
+                <div className="action-buttons">
+                  <Button
+                    className="action-button editButton"
+                    onClick={() => handleEdit(product)}
+                    variant="outline-primary"
+                    title="Edit Product"
+                  >
+                    <RiEdit2Fill />
+                  </Button>
 
-      {/* MODAL FOR ADD AND EDIT PRODUCT */}
-      <ProductForm
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-        isEdit={isEdit}
-        selectedProduct={selectedProduct}
-        onProductSaved={handleProductSaved}
-      />
+                  <Button
+                    className="action-button deleteButton"
+                    onClick={() => handleDelete(product.id)}
+                    variant="outline-danger"
+                    title="Delete Product"
+                  >
+                    <RiDeleteBin5Fill />
+                  </Button>
+                </div>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="7" className="text-center">
+              No products found
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </Table>
+  </div>
+</div>
 
-      {/* MODAL FOR DELETE */}
-      <DeletePrompt
-        show={showDeleteModal}
-        handleClose={() => setShowDeleteModal(false)}
-        confirmDelete={confirmDelete}
-      />
+{/* MODAL FOR ADD AND EDIT PRODUCT */}
+<ProductForm
+  show={showModal}
+  handleClose={() => setShowModal(false)}
+  isEdit={isEdit}
+  selectedProduct={selectedProduct}
+  onProductSaved={handleProductSaved}
+/>
+
+{/* MODAL FOR DELETE */}
+<DeletePrompt
+  show={showDeleteModal}
+  handleClose={() => setShowDeleteModal(false)}
+  confirmDelete={confirmDelete}
+/>
+
     </>
   );
 }

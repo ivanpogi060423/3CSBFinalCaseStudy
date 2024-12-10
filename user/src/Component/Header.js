@@ -8,8 +8,6 @@ export default function Header() {
         <div className="header">
             <div className="title">
             <IoBagHandle className='bag-icon' />
-                <h4>Light's Shop</h4>
-
                 <Link to="/cart"> 
                     <GiShoppingCart className="cart-icon" />
                 </Link>

@@ -4,7 +4,7 @@ export default function Header() {
         <div className="header">
             <div className="title">
                 <GiShoppingCart className="cart-icon" />
-                <h4>Light's Shop</h4>
+                <h4>Pagod na'ko</h4>
             </div>
         </div>
     );

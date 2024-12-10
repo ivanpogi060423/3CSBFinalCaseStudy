@@ -9,15 +9,14 @@ use Illuminate\Validation\ValidationException;
 
 class CartController extends Controller
 {
-    // List all Carts
+    // List of all Items inside the cart
     public function index(): JsonResponse
     {
         $Carts = Cart::all();
         return response()->json(['data' => $Carts], 200);
     }
 
-    // Add a new Cart
-// Add a new Cart
+    // Add an item in the cart
 public function store(Request $request)
 {
     // Define validation rules
@@ -49,7 +48,7 @@ public function store(Request $request)
 
     
 
-    // Get details of a single Cart
+    // Get details of a single item in the cart
     public function show(int $id): JsonResponse
     {
         $Cart = Cart::findOrFail($id);
@@ -107,10 +106,10 @@ public function store(Request $request)
         return response()->json(['message' => 'Cart deleted successfully'], 200);
     }
     
- // Destroy all Carts (Clear the cart)
+ // Destroy all Items inside the cart 
  public function destroyAll(): JsonResponse
 {
-    // Delete all Carts
+    // (Clear the cart)
     Cart::query()->delete();
 
     return response()->json(['message' => 'All Carts have been deleted successfully'], 200);

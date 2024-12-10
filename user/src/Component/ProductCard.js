@@ -27,14 +27,14 @@ export default function ProductCard({ product }) {
       if (existingItem) {
         const updatedQuantity = existingItem.quantity + quantity;
         // Send the updated quantity to the server
-        const updateResponse = await axios.put(
+        await axios.put(
           `http://127.0.0.1:8000/api/cart/${existingItem.id}`,
           { quantity: updatedQuantity }  
         );
         setToastMessage(`${product.name} updated in the cart!`);
       } else {
         // If the item is not in the cart, add it
-        const response = await axios.post('http://127.0.0.1:8000/api/cart', {
+        await axios.post('http://127.0.0.1:8000/api/cart', {
           product_id: product.id,      
           barcode: product.barcode,    
           name: product.name,        
